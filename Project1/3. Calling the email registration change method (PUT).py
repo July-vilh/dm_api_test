@@ -20,3 +20,5 @@ headers = {
 response = requests.request("PUT", url, headers=headers, data=payload)
 
 print(response.text)
+
+# after go the e-mail with new token -> add this token and run POST method (registration user)!!!!!
