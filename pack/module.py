@@ -29,8 +29,7 @@ def printing_message(name):
     message=create_message(name)
     print(message)
 
-if __name__ == '__main__':
-
+def toxic_function(name):
     match name:
         case 'Ivan':
             printing_message(name)
