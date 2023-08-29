@@ -1,4 +1,4 @@
-# 4. Calling the method for authenticate via credentials (POST)
+# 3. Calling the method for authenticate via credentials (POST)
 
 import requests
 import json
