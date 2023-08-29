@@ -1,3 +1,4 @@
+# 1. Calling the user registration method (POST)
 # Swagger -> import method to the Postman -> choose correct environment (for baseUrl) -> update data in Body (for registration) -> Code -> Python request -> update values in PyCharm and Run
 
 
