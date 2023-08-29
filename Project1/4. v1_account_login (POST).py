@@ -1,4 +1,4 @@
-# 4. Calling the email registration change method (POST)
+# 4. Calling the method for authenticate via credentials (POST)
 
 import requests
 import json
