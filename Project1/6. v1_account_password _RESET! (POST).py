@@ -1,4 +1,4 @@
-# 7. Calling method for RESET registered password (POST)
+# 6. Calling method for RESET registered password (POST)
 
 import requests
 import json
