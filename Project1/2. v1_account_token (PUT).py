@@ -1,16 +1,22 @@
 # 2. Calling the user registration activation method (PUT)
 
-import requests
+def put_v1_account_token():
+  import requests
 
-url = "http://5.63.153.31:5051/v1/account/4b06f182-322c-4ded-bcde-9de97f41f4ea"
+  token = '221312'
+  url = f"http://5.63.153.31:5051/v1/account/{token}"
 
-payload = ""
-headers = {
-  'X-Dm-Auth-Token': 'voluptate magna incididunt',
-  'X-Dm-Bb-Render-Mode': 'voluptate magna incididunt',
-  'Accept': 'text/plain'
-}
+  headers = {
+    'X-Dm-Auth-Token': 'voluptate magna incididunt',
+    'X-Dm-Bb-Render-Mode': 'voluptate magna incididunt',
+    'Accept': 'text/plain'
+  }
 
-response = requests.request("PUT", url, headers=headers, data=payload)
+  response = requests.request(
+    method="PUT",
+    url=url,
+    headers=headers
+  )
 
-print(response.text)
+  return response
+

@@ -1,23 +1,28 @@
 # 5. Calling method for change password (POST)
 
-import requests
-import json
+def post_account_password_chande():
+  import requests
 
-url = "http://5.63.153.31:5051/v1/account/password"
+  url = "http://5.63.153.31:5051/v1/account/password"
 
-payload = json.dumps({
-  "login": "login_6",
-  "token": "2d9eead9-2a3f-4e58-8865-cea4d363e4eb",
-  "oldPassword": "login_66",
-  "newPassword": "login_67"
-})
-headers = {
-  'X-Dm-Auth-Token': 'voluptate magna incididunt',
-  'X-Dm-Bb-Render-Mode': 'voluptate magna incididunt',
-  'Content-Type': 'application/json',
-  'Accept': 'text/plain'
-}
+  payload = {
+    "login": "login_6",
+    "token": "2d9eead9-2a3f-4e58-8865-cea4d363e4eb",
+    "oldPassword": "login_66",
+    "newPassword": "login_67"
+  }
+  headers = {
+    'X-Dm-Auth-Token': 'voluptate magna incididunt',
+    'X-Dm-Bb-Render-Mode': 'voluptate magna incididunt',
+    'Content-Type': 'application/json',
+    'Accept': 'text/plain'
+  }
 
-response = requests.request("PUT", url, headers=headers, data=payload)
+  response = requests.request(
+    method="PUT",
+    url=url,
+    headers=headers,
+    json=payload
+  )
 
-print(response.text)
+  return response
