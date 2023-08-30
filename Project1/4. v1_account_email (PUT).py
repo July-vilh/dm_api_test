@@ -26,4 +26,12 @@ def put_account_email():
 
   return response
 
+
+response = put_account_email()
+print(response.request)
+print(response.content)
+print(response.url)
+print(response.status_code)
+print(response.json)
+
 # after go the e-mail with new token -> add this token and run POST method (through the enter new token at the Activate registered user (POST)))!!!!!

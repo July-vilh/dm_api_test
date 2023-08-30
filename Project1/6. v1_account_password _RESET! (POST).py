@@ -24,3 +24,11 @@ def post_account_password_reset():
   )
 
   return response
+
+
+response = post_account_password_reset()
+print(response.request)
+print(response.content)
+print(response.url)
+print(response.status_code)
+print(response.json)

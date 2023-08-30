@@ -20,3 +20,10 @@ def put_v1_account_token():
 
   return response
 
+
+response = put_v1_account_token()
+print(response.request)
+print(response.content)
+print(response.url)
+print(response.status_code)
+print(response.json)

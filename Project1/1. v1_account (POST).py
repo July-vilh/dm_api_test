@@ -26,10 +26,11 @@ def post_v1_account():
     )
 
     return response
+
+
 response = post_v1_account()
 print(response.request)
 print(response.content)
 print(response.url)
 print(response.status_code)
 print(response.json)
-

@@ -26,3 +26,11 @@ def post_account_password_chande():
   )
 
   return response
+
+
+response = post_account_password_chande()
+print(response.request)
+print(response.content)
+print(response.url)
+print(response.status_code)
+print(response.json)
