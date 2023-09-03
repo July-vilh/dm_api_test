@@ -1,5 +1,7 @@
 import requests
 from requests import Response
+
+
 from ..models.registaration_model import Registration_model
 from ..models.change_password import Change_password
 from ..models.change_email import Change_email
@@ -29,9 +31,8 @@ class AccountApi:
         )
         return response
 
-    def put_v1_account_token(self):
+    def put_v1_account_token(self, token):
 
-        token = 'd7a59f9f-a77c-4ed9-9735-8567166b4e48'
         response = requests.put(
             url=f"{self.host}/v1/account/{token}"
         )
