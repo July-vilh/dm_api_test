@@ -6,17 +6,19 @@ from ..models.registaration_model import Registration_model
 from ..models.change_password import Change_password
 from ..models.change_email import Change_email
 from ..models.reset_password import Reset_password
-from requests import session
+from restclient1.restclient2 import restclient3
+
 class AccountApi:
     def __init__(self, host, headers=None):
         self.host = host
-        self.session = session()
-        self.session.headers.update(headers) if headers else None
+        self.client = restclient3(host=host, headers=headers)
+        if headers:
+            self.client.session.headers.update(headers)
 
     def post_v1_account(self, json: Registration_model, **kwargs) -> Response:
 
-        response = self.session.post(
-            url=f"{self.host}/v1/account",
+        response = self.client.post(
+            path=f"/v1/account",
             json=json,
             **kwargs
         )
@@ -24,24 +26,22 @@ class AccountApi:
 
     def post_account_password_change(self, json: Change_password, **kwargs) -> Response:
 
-        response = self.session.put(
-            url=f"{self.host}/v1/account/password",
+        response = self.client.put(
+            path=f"/v1/account/password",
             json=json,
             **kwargs
         )
         return response
 
     def put_v1_account_token(self, token):
-
-        response = requests.put(
-            url=f"{self.host}/v1/account/{token}"
-        )
+        url = f"{self.host}/v1/account/{token}"
+        response = requests.put(url)
         return response
 
     def put_account_email(self, json: Change_email, **kwargs) -> Response:
 
-        response = self.session.put(
-            url=f"{self.host}/v1/account/email",
+        response = self.client.put(
+            path=f"/v1/account/email",
             json=json,
             **kwargs
         )
@@ -49,8 +49,8 @@ class AccountApi:
 
     def post_account_password_reset(self, json: Reset_password, **kwargs) -> Response:
 
-        response = self.session.post(
-            url=f"{self.host}/v1/account/password",
+        response = self.client.post(
+            path=f"/v1/account/password",
             json=json,
             **kwargs
         )

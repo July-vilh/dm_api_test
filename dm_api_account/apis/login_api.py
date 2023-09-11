@@ -2,6 +2,7 @@ import requests
 from requests import Response
 from ..models.login_credentials import Login_credentials
 from requests import session
+
 class LoginApi:
     def __init__(self, host, headers=None):
         self.host = host
