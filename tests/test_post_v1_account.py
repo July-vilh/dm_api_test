@@ -17,9 +17,9 @@ def test_post_v1_account():
     api = dmapiaccount(host='http://5.63.153.31:5051')
 
     json = {
-        "login": "login_5675",
-        "email": "login5675@mail.ru",
-        "password": "login_5675"
+        "login": "login_5678",
+        "email": "login5678@mail.ru",
+        "password": "login_5678"
     }
     response = api.account.post_v1_account(json=json)
     assert response.status_code == 201, f'Status code should be equal 201, but now status code {response.status_code}'
