@@ -1,19 +1,19 @@
 import requests
 from requests import Response
 from ..models.login_credentials import Login_credentials
-from requests import session
+from restclient1.restclient2 import restclient3
+
 
 class LoginApi:
     def __init__(self, host, headers=None):
         self.host = host
-        self.session = session()
-        self.session.headers.update(headers) if headers else None
-
+        self.client = restclient3(host=host, headers=headers)
+        if headers:
+            self.client.session.headers.update(headers)
 
     def post_account_login(self, json: Login_credentials, **kwargs) -> Response:
-
-        response = self.session.post(
-            url=f"{self.host}/v1/account/login",
+        response = self.client.post(
+            path=f"/v1/account/login",
             json=json,
             **kwargs
         )

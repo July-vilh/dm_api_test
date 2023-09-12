@@ -17,11 +17,21 @@ def test_post_v1_account():
     api = dmapiaccount(host='http://5.63.153.31:5051')
 
     json = {
-        "login": "login_5675",
-        "email": "login5675@mail.ru",
-        "password": "login_5675"
+        "login": "login_5678",
+        "email": "login5678@mail.ru",
+        "password": "login_5678"
     }
     response = api.account.post_v1_account(json=json)
     assert response.status_code == 201, f'Status code should be equal 201, but now status code {response.status_code}'
     token = mailhog.get_token_from_last_email()
     response = api.account.put_v1_account_token(token=token)
+
+
+def check_input_json_request(json):
+    for key, value in json.tems():
+        if key == "login":
+            assert isinstance(value, str), f'Type at the {key} should be str, but now {type(value)}'
+        elif key == "email":
+            assert isinstance(value, str), f'Type at the {key} should be str, but now {type(value)}'
+        elif key == "password":
+            assert isinstance(value, str), f'Type at the {key} should be str, but now {type(value)}'

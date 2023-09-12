@@ -1,12 +1,12 @@
 import requests
 from requests import Response
 
-
 from ..models.registaration_model import Registration_model
 from ..models.change_password import Change_password
 from ..models.change_email import Change_email
 from ..models.reset_password import Reset_password
 from restclient1.restclient2 import restclient3
+
 
 class AccountApi:
     def __init__(self, host, headers=None):
@@ -16,7 +16,6 @@ class AccountApi:
             self.client.session.headers.update(headers)
 
     def post_v1_account(self, json: Registration_model, **kwargs) -> Response:
-
         response = self.client.post(
             path=f"/v1/account",
             json=json,
@@ -25,21 +24,23 @@ class AccountApi:
         return response
 
     def post_account_password_change(self, json: Change_password, **kwargs) -> Response:
-
-        response = self.client.put(
+        response = self.client.post(
             path=f"/v1/account/password",
             json=json,
             **kwargs
         )
         return response
 
-    def put_v1_account_token(self, token):
-        url = f"{self.host}/v1/account/{token}"
-        response = requests.put(url)
+
+    def put_v1_account_token(self, token, json: Change_email, **kwargs):
+        response = self.client.put(
+            path=f"/v1/account/{token}",
+            json=json,
+            **kwargs
+        )
         return response
 
     def put_account_email(self, json: Change_email, **kwargs) -> Response:
-
         response = self.client.put(
             path=f"/v1/account/email",
             json=json,
@@ -48,7 +49,6 @@ class AccountApi:
         return response
 
     def post_account_password_reset(self, json: Reset_password, **kwargs) -> Response:
-
         response = self.client.post(
             path=f"/v1/account/password",
             json=json,
