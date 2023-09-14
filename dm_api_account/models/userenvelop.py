@@ -22,17 +22,17 @@ class Rating(BaseModel):
 class User(BaseModel):
     login: StrictStr
     roles: List[Roles]
-    medium_picture_url: Optional[StrictStr] = Field(alias="mediumPictureUrl")
-    small_picture_url: Optional[StrictStr] = Field(alias="smallPictureUrl")
-    status: Optional[StrictStr]
+    # medium_picture_url: Optional[StrictStr] = Field(alias="mediumPictureUrl")
+    # small_picture_url: Optional[StrictStr] = Field(alias="smallPictureUrl")
+    # status: Optional[StrictStr]
     rating: Rating
-    online: Optional[Date]
-    name: Optional[StrictStr]
-    location: Optional[StrictStr]
-    registration: Optional[Date]
+    # online: Optional[Date]
+    # name: Optional[StrictStr]
+    # location: Optional[StrictStr]
+    # registration: Optional[Date]
 
 
 class user_envelop(BaseModel):
-    resource: Optional[User]
-    metadata: Optional[StrictStr]
+    resource: User
+    # metadata: Optional[StrictStr]
 

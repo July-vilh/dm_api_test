@@ -2,7 +2,6 @@ import requests
 from requests import Response
 
 from ..models.registaration_model import Registrationmodel
-from ..models.change_password import Change_password
 from ..models.change_email import Change_email
 from ..models.reset_password import Reset_password
 from restclient1.restclient2 import restclient3

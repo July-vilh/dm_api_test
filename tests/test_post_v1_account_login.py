@@ -13,12 +13,21 @@ structlog.configure(
 def test_post_v1_account_login():
     api = dmapiaccount(host='http://5.63.153.31:5051')
     json = {
-        "login": "login_5677",
-        "password": "login_5677",
+        "login": "555559",
+        "password": "login_221",
         "rememberMe": True
     }
+    check_input_json_request(json)
 
     response = api.login.post_account_login(json=json)
     assert response.status_code == 200, f'Status code should be equal 200, but now status code {response.status_code}'
-    # token = mailhog.get_token_from_last_email()
-    # response = api.account.put_v1_account_token(token=token)
+
+
+def check_input_json_request(json):
+    for key, value in json.items():
+        if key == "login":
+            assert isinstance(value, str), f'Value at the {key} should be str, but now {type(value)}'
+        elif key == "password":
+            assert isinstance(value, str), f'Value at the {key} should be str, but now {type(value)}'
+        elif key == "rememberMe":
+            assert isinstance(value, bool), f'Value at the {key} should be bool, but now {type(value)}'

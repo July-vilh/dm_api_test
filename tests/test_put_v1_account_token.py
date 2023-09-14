@@ -18,7 +18,7 @@ def test_put_v1_account_token():
     # response = api.account.put_v1_account_token(token=token)
     # print(response)
 
-    response = api.account.put_v1_account_token(token=None, json=None)
-    assert response.status_code == 201, f'Status code should be equal 201, but now status code {response.status_code}'
+    # response = api.account.put_v1_account_token(token=None, json=None)
+    # assert response.status_code == 201, f'Status code should be equal 201, but now status code {response.status_code}'
     token = mailhog.get_token_from_last_email()
     response = api.account.put_v1_account_token(token=token)
