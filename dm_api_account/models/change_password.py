@@ -1,6 +1,20 @@
-Change_password = {
-    "login": "login_6",
-    "token": "2d9eead9-2a3f-4e58-8865-cea4d363e4eb",
-    "oldPassword": "login_66",
-    "newPassword": "login_67"
-}
+from __future__ import annotations
+
+from typing import Optional
+from uuid import UUID
+
+from pydantic import BaseModel, Extra, Field, StrictStr
+
+
+class ChangePassword(BaseModel):
+    class Config:
+        extra = Extra.forbid
+
+    login: Optional[StrictStr] = Field(None, description='User login')
+    token: Optional[UUID] = Field(None, description='Password reset token')
+    old_password: Optional[StrictStr] = Field(
+        None, alias='oldPassword', description='Old password'
+    )
+    new_password: Optional[StrictStr] = Field(
+        None, alias='newPassword', description='New password'
+    )

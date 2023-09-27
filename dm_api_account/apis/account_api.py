@@ -1,11 +1,9 @@
 import requests
 from requests import Response
-
-from ..models.registaration_model import Registrationmodel
-from ..models.change_email import Change_email
-from ..models.reset_password import Reset_password
+from model import *
+from model import UserEnvelope
 from restclient1.restclient2 import restclient3
-from dm_api_account.models.userenvelop import user_envelop
+from dm_api_account.utilities import validate_request_json, validate_status_code
 
 
 class AccountApi:
@@ -15,43 +13,50 @@ class AccountApi:
         if headers:
             self.client.session.headers.update(headers)
 
-    def post_v1_account(self, json: Registrationmodel, **kwargs) -> Response:
+    def post_v1_account(self, json: Registration, status_code=201, **kwargs) -> Response:
         response = self.client.post(
             path=f"/v1/account",
-            json=json.dict(by_alias=True, exclude_none=True),
+            json=validate_request_json(json),
             **kwargs
         )
+        validate_status_code(response, status_code)
         return response
 
-    def post_account_password_change(self, json: Registrationmodel, **kwargs) -> Response:
+    def post_account_password_change(self, json: Registration, status_code: int, **kwargs) -> UserEnvelope | Response:
         response = self.client.post(
             path=f"/v1/account/password",
-            json=json.dict(by_alias=True, exclude_none=True),
+            json=validate_request_json(json),
             **kwargs
         )
+        validate_status_code(response, status_code)
         return response
 
-    def put_v1_account_token(self, token: str, **kwargs):
-
+    def put_v1_account_token(self, token: str, status_code=200, **kwargs):
         response = self.client.put(
             path=f"/v1/account/{token}",
             **kwargs
         )
-        user_envelop(**response.json())
+        validate_status_code(response, status_code)
+        if response.status_code == 200:
+            return UserEnvelope(**response.json())
         return response
 
-    def put_account_email(self, json: Change_email, **kwargs) -> Response:
+    def put_account_email(self, json: ChangeEmail, status_code: int, **kwargs) -> Response:
         response = self.client.put(
             path=f"/v1/account/email",
-            json=json,
+            json=validate_request_json(json),
             **kwargs
         )
+        validate_status_code(response, status_code)
         return response
 
-    def post_account_password_reset(self, json: Reset_password, **kwargs) -> Response:
+    def post_account_password_reset(self, json: ResetPassword, status_code=200, **kwargs) -> UserEnvelope | Response:
         response = self.client.post(
             path=f"/v1/account/password",
-            json=json,
+            json=validate_request_json(json),
             **kwargs
         )
+        validate_status_code(response, status_code)
+        if response.status_code == 200:
+            return UserEnvelope(**response.json())
         return response
