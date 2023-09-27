@@ -3,7 +3,7 @@
 # import json
 from hamcrest import assert_that, has_properties
 from Services.dm_api_account import dmapiaccount
-from Services.mailhog import mailhog_api
+from generic.helpers.mailhog import mailhog_api
 import structlog
 
 

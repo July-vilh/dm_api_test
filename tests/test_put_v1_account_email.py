@@ -1,7 +1,7 @@
 # 4. Calling the email registration change method (PUT)
 
 from Services.dm_api_account import dmapiaccount
-from Services.mailhog import mailhog_api
+from generic.helpers.mailhog import mailhog_api
 import structlog
 
 structlog.configure(

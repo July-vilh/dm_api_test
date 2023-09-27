@@ -1,7 +1,7 @@
 # 5. Calling method for change password (POST)
 
 from Services.dm_api_account import dmapiaccount
-from Services.mailhog import mailhog_api
+from generic.helpers.mailhog import mailhog_api
 import structlog
 
 structlog.configure(
