@@ -13,6 +13,14 @@ class AccountApi:
         if headers:
             self.client.session.headers.update(headers)
 
+    def get_v1_account(self, status_code: int = 200, **kwargs) -> UserEnvelope | Response:
+        response = self.client.get(
+            path=f"/v1/account",
+            **kwargs
+        )
+        validate_status_code(response, status_code)
+        return response
+
     def post_v1_account(self, json: Registration, status_code=201, **kwargs) -> Response:
         response = self.client.post(
             path=f"/v1/account",

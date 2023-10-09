@@ -15,9 +15,16 @@ class Account:
         )
         return response
 
-    def activate_registered_user(self, login: str):
-        token = self.facade.mailhog.get_token_by_login(login=login)
-        response = self.facade.account_api.put_v1_account_token(
-            token=token
-        )
+    def activate_registered_user(self, login: str, token: str):
+        token = self.facade.mailhog.get_api_v2_messages(login=login)
+        response = self.facade.account_api.put_v1_account_token(token=token)
         return response
+
+    def current_user_info(self, **kwargs):
+        response = self.facade.account_api.get_v1_account(**kwargs)
+        return response
+
+    def set_headers(self, headers):
+        self.facade.account_api.client.session.update(headers)
+
+

@@ -1,6 +1,6 @@
 # 3. Calling the method for authenticate via credentials (POST)
 
-from Services.dm_api_account import dmapiaccount
+from Services.dm_api_account import Facade
 import structlog
 
 structlog.configure(
@@ -11,15 +11,9 @@ structlog.configure(
 
 
 def test_post_v1_account_login():
-    api = dmapiaccount(host='http://5.63.153.31:5051')
-    json = {
-        "login": "555559",
-        "password": "login_221",
-        "rememberMe": True
-    }
-    check_input_json_request(json)
+    api = Facade(host='http://5.63.153.31:5051')
 
-    response = api.login.post_account_login(json=json)
+    response = api.login.get_auth_token()
     assert response.status_code == 200, f'Status code should be equal 200, but now status code {response.status_code}'
 
 

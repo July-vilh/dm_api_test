@@ -15,9 +15,9 @@ def test_post_v1_account():
     api = Facade(host='http://5.63.153.31:5051')
 
     # REGISTER NEW USER:
-    login = "login00335"
-    email = "login00335@mail.ru"
-    password = "login_00335 "
+    login = "login00349"
+    email = "login00349@mail.ru"
+    password = "login_00349"
 
     response = api.account.register_new_user(
         login=login,
