@@ -12,3 +12,4 @@ class Facade:
         self.mailhog = mailhog_api()
         self.account = Account(self)
         self.login = Login(self)
+

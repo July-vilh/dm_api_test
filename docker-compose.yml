@@ -8,4 +8,4 @@ services:
       POSTGRES_PASSWORD: "1356"
       POSTGRES_DB: "JULYdb"
     ports:
-      "5432:5432"
+      - "5432:5432"
