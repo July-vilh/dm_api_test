@@ -24,7 +24,7 @@ class Login:
         return token
 
     def set_headers(self, headers):
-        self.facade.login_api.client.session.update(headers)
+        self.facade.account_api.client.session.headers.update(headers)
 
     def logout_user(self, **kwargs):
         response = self.facade.login_api.delete_v1_account_login(**kwargs)

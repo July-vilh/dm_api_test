@@ -61,3 +61,8 @@ class restclient3:
             return response.json()
         except requests.exceptions.JSONDecodeError:
             return
+
+    def delete(self, path):
+        full_url = self.host + path
+        response = requests.delete(full_url)
+        return response

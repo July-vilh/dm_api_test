@@ -1,0 +1,67 @@
+User:
+  type: object
+  properties:
+    login:
+      type: string
+    roles:
+      type: array
+      items:
+        type: string
+    mediumPictureUrl:
+      type: string
+    smallPictureUrl:
+      type: string
+    status:
+      type: string
+    rating:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        quality:
+          type: integer
+        quantity:
+          type: integer
+    online:
+      type: string
+      format: date-time
+    name:
+      type: string
+    location:
+      type: string
+    registration:
+      type: string
+      format: date-time
+    icq:
+      type: string
+    skype:
+      type: string
+    originalPictureUrl:
+      type: string
+    info:
+      type: object
+      properties:
+        value:
+          type: string
+        parseMode:
+          type: string
+    settings:
+      type: object
+      properties:
+        colorSchema:
+          type: string
+        nannyGreetingsMessage:
+          type: string
+        paging:
+          type: object
+          properties:
+            postsPerPage:
+              type: integer
+            commentsPerPage:
+              type: integer
+            topicsPerPage:
+              type: integer
+            messagesPerPage:
+              type: integer
+            entitiesPerPage:
+              type: integer
