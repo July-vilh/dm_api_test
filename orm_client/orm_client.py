@@ -32,10 +32,10 @@ class OrmClient:
 
         log.msg(
             event='request',
-            query=query
+            query=str(query)
         )
 
-        dataset = self.db.execute(query=query)
+        dataset = self.db.execute(statement=query)
 
         log.msg(
             event='response',

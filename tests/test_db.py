@@ -1,5 +1,5 @@
 import records
-from sqlalchemy import create_engine, text, Column, String, Boolean, select
+from sqlalchemy import create_engine, text, Column, String, Boolean, select, Integer, JSON
 import structlog
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import UUID
@@ -18,14 +18,16 @@ structlog.configure(
 
 
 class User(Base):
-    __tablename__ = 'USERS2'
+    __tablename__ = 'users'
 
-    UserId = Column(UUID, primary_key=True)
+    UserId = Column(Integer, primary_key=True, autoincrement=True)
     Login = Column(String(100))
     Email = Column(String(100))
     Password = Column(String(100))
     Name = Column(String(100))
     Activated = Column(Boolean, nullable=False)
+    Roles = Column(JSON)
+    Status = Column(String(100))
 
 
 def test_orm():
@@ -37,6 +39,6 @@ def test_orm():
     # isolation_level = 'AUTOCOMMIT'
     # db = create_engine(connection_string, isolation_level=isolation_level)
     # connect = db.connect()
-    orm = OrmClient(POSTGRES_USER=POSTGRES_USER, POSTGRES_PASSWORD=POSTGRES_PASSWORD, host=host, POSTGRES_DB=POSTGRES_DB)
+    orm = OrmClient(POSTGRES_USER=POSTGRES_USER, POSTGRES_PASSWORD=POSTGRES_PASSWORD, POSTGRES_DB=POSTGRES_DB)
     query = select([User])
     dataset = orm.send_query(query)
