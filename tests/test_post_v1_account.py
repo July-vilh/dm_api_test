@@ -28,9 +28,9 @@ def test_post_v1_account():
     api = Facade(host='http://5.63.153.31:5051')
 
     # REGISTER NEW USER:
-    login = "login000001"
-    email = "login000001@mail.ru"
-    password = "login_000001"
+    login = "login000002"
+    email = "login000002@mail.ru"
+    password = "login_000002"
 
     db = dmDB(POSTGRES_USER='JULY', POSTGRES_PASSWORD="1356", POSTGRES_DB='JULYdb')
 
