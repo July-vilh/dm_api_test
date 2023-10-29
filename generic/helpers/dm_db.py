@@ -30,10 +30,10 @@ class dmDB:
 
     def user_exists(self, login, email):
         # Создаем SQL-запрос для проверки наличия пользователя
-        sql = "SELECT COUNT(*) FROM users WHERE login = :login OR email = :email"
+        sql = "SELECT COUNT(*) FROM users WHERE \"Login\" = :Login OR \"Email\" = :Email"
 
         # Параметры для SQL-запроса
-        params = {'login': login, 'email': email}
+        params = {'Login': login, 'Email': email}
 
         # Выполняем запрос с параметрами
         result = self.db.query(sql, params).scalar()

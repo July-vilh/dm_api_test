@@ -4,6 +4,8 @@ import structlog
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import UUID
 
+from orm_client.orm_client import OrmClient
+
 Base = declarative_base()
 
 from generic.helpers.dm_db import dmDB
@@ -31,17 +33,10 @@ def test_orm():
     POSTGRES_PASSWORD = '1356'
     host = 'localhost'
     POSTGRES_DB = 'JULYdb'
-    connection_string = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{host}/{POSTGRES_DB}"
-    isolation_level = 'AUTOCOMMIT'
-    db = create_engine(connection_string, isolation_level=isolation_level)
-    connect = db.connect()
+    # connection_string = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{host}/{POSTGRES_DB}"
+    # isolation_level = 'AUTOCOMMIT'
+    # db = create_engine(connection_string, isolation_level=isolation_level)
+    # connect = db.connect()
+    orm = OrmClient(POSTGRES_USER=POSTGRES_USER, POSTGRES_PASSWORD=POSTGRES_PASSWORD, host=host, POSTGRES_DB=POSTGRES_DB)
     query = select([User])
-    dataset = connect.execute(query)
-    for row in dataset:
-        print(dict(row))
-    # result = [dict(row) for row in dataset]
-    # print(result)
-
-# def test_db():
-#     db = dmDB(POSTGRES_USER='JULY', POSTGRES_PASSWORD="1356", POSTGRES_DB='JULYdb')
-#     db.get_sql()
+    dataset = orm.send_query(query)

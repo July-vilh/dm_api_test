@@ -44,9 +44,9 @@ def test_post_v1_account():
         )
 
     new_user_info = {
-        'login': login,
-        'email': email,
-        'password': password
+        'Login': login,
+        'Email': email,
+        'Password': password
     }
 
     new_user = USERS(**new_user_info)
@@ -59,14 +59,14 @@ def test_post_v1_account():
 
     dataset = db.get_user_by_login(login=login)
     for row in dataset:
-        assert row['login'] == login, f"User{login}not registered"
+        assert row['Login'] == login, f"User {login} not registered"
 
     # REGISTER ACTIVATE USER:
     api.account.activate_registered_user(login=login)
     time.sleep(2)
     dataset = db.get_user_by_login(login=login)
     for row in dataset:
-        assert row['status'] is True, f"User {login} not activated"
+        assert row['Status'] is True, f"User {login} not activated"
 
     # LOGIN USER:
     api.login.login_user(login=login, password=password)

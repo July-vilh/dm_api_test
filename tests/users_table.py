@@ -1,5 +1,4 @@
-from sqlalchemy import create_engine, text, Column, String, Boolean, JSON
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import create_engine, Column, String, Boolean, JSON, Integer
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import declarative_base
 
@@ -11,7 +10,7 @@ Base = declarative_base()
 class USERS(Base):
     __tablename__ = 'users'
 
-    UserId = Column(UUID, primary_key=True)
+    UserId = Column(Integer, primary_key=True, autoincrement=True)
     Login = Column(String(100))
     Email = Column(String(100))
     Password = Column(String(100))
