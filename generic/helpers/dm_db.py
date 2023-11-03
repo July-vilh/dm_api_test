@@ -15,7 +15,7 @@ class dmDB:
     def get_user_by_login(self, login):
         query = f'''
         select * from "public"."users"
-        where "login" = '{login}'
+        where "Login" = '{login}'
         '''
         dataset = self.db.send_query(query=query)
         return dataset
@@ -23,7 +23,7 @@ class dmDB:
     def delete_user_by_login(self, login):
         query = f'''
           delete from "public"."users"
-          where "login" = '{login}'
+          where "Login" = '{login}'
           '''
         dataset = self.db.send_bulk_query(query=query)
         return dataset

@@ -1,6 +1,8 @@
 # 1. Calling the user registration method (POST)
 # Swagger -> import method to the Postman -> choose correct environment (for baseUrl) -> update data in Body (for registration) -> Code -> Python request -> update values in PyCharm and Run
 import time
+import uuid
+
 from generic.helpers.dm_db import dmDB
 
 db = f"postgresql://JULY:1356@localhost/JULYdb"
@@ -28,9 +30,9 @@ def test_post_v1_account():
     api = Facade(host='http://5.63.153.31:5051')
 
     # REGISTER NEW USER:
-    login = "login000002"
-    email = "login000002@mail.ru"
-    password = "login_000002"
+    login = "login000006"
+    email = "login000006@mail.ru"
+    password = "login_000006"
 
     db = dmDB(POSTGRES_USER='JULY', POSTGRES_PASSWORD="1356", POSTGRES_DB='JULYdb')
 
@@ -50,6 +52,7 @@ def test_post_v1_account():
     }
 
     new_user = USERS(**new_user_info)
+    new_user.UserId = str(uuid.uuid4())
     session.add(new_user)
     session.commit()
 
