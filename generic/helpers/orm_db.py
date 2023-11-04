@@ -12,3 +12,11 @@ class OrmDB:
         query = select([User])
         dataset = self.db.send_query(query)
         return dataset
+
+    def get_user_by_login(self, login):
+        query = f'''
+        select * from "public"."users"
+        where "Login" = '{login}'
+        '''
+        dataset = self.db.send_query(query=query)
+        return dataset
