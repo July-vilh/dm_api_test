@@ -14,7 +14,7 @@ from sqlalchemy.dialects.postgresql import UUID
 metadata = MetaData()
 
 
-t_users = Table(
+User = Table(
     'users', metadata,
     Column('UserId', UUID),
     Column('Login', String(100)),
