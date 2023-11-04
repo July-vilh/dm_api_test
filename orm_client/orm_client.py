@@ -37,13 +37,11 @@ class OrmClient:
 
         dataset = self.db.execute(statement=query)
         result = [row for row in dataset]
-        print(result)
         log.msg(
             event='response',
             dataset=[dict(row) for row in result]
         )
-        print(result)
-        return dataset
+        return result
 
     def send_bulk_query(self, query):
         print(query)

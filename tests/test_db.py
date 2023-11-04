@@ -27,6 +27,4 @@ def test_orm():
         print(row.Name)
         print(row.Activated)
 
-
-
     orm.db.close_connection()
