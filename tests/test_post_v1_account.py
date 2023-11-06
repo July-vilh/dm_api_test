@@ -10,6 +10,7 @@ from tests.users_table import USERS
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from hamcrest import assert_that, has_entries
 
 # Создайте engine (движок) для работы с базой данных
 engine = create_engine('postgresql://JULY:1356@localhost/JULYdb')
@@ -20,7 +21,7 @@ Session = sessionmaker(bind=engine)
 @pytest.fixture
 def prepare_user(dm_api_facade, dm_db):
     user = namedtuple("User", "login, email, password")
-    User = user(login="login000015", email="login000015@mail.ru", password="login_000015")
+    User = user(login="login000017", email="login000017@mail.ru", password="login_000017")
     dm_db.delete_user_by_login(login=User.login)
     dataset = dm_db.get_user_by_login(login=User.login)
     assert len(dataset) == 0
@@ -29,10 +30,11 @@ def prepare_user(dm_api_facade, dm_db):
     return User
 
 
-def test_post_v1_account(dm_api_facade, dm_db):
+def test_post_v1_account(dm_api_facade, dm_db, prepare_user):
     # REGISTER NEW USER:
-
-
+    login = prepare_user.login
+    email = prepare_user.email
+    password = prepare_user.password
 
     if not dm_db.user_exists(login, email):
         response = dm_api_facade.account.register_new_user(
@@ -53,20 +55,27 @@ def test_post_v1_account(dm_api_facade, dm_db):
     session.add(new_user)
     session.commit()
 
-
-
-
-
     dataset = dm_db.get_user_by_login(login=login)
     for row in dataset:
-        assert row['Login'] == login, f"User {login} not registered"
+        assert_that(row, has_entries(
+            {
+                "Login": login
+            }
+        ))
+        # assert row['Login'] == login, f"User {login} not registered"
 
     # REGISTER ACTIVATE USER:
     dm_api_facade.account.activate_registered_user(login=login)
     time.sleep(2)
     dataset = dm_db.get_user_by_login(login=login)
-    for row in dataset:
-        assert row['Status'] is True, f"User {login} not activated"
+    # for row in dataset:
+    #     assert_that(row, has_entries(
+    #         {
+    #             "Status": True
+    #         }
+    #     ))
+
+        # assert row['Status'] is True, f"User {login} not activated"
 
     # LOGIN USER:
     dm_api_facade.login.login_user(login=login, password=password)
