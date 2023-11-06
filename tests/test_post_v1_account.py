@@ -2,6 +2,8 @@
 # Swagger -> import method to the Postman -> choose correct environment (for baseUrl) -> update data in Body (for registration) -> Code -> Python request -> update values in PyCharm and Run
 import time
 import uuid
+
+import pytest
 from sqlalchemy.orm import Session
 from tests.users_table import USERS
 
@@ -14,13 +16,22 @@ engine = create_engine('postgresql://JULY:1356@localhost/JULYdb')
 Session = sessionmaker(bind=engine)
 
 
-def test_post_v1_account(dm_api_facade, dm_db):
-    # REGISTER NEW USER:
+@pytest.fixture
+def prepare_user(dm_api_facade, dm_db):
     login = "login000015"
     email = "login000015@mail.ru"
     password = "login_000015"
 
+    dm_db.delete_user_by_login(login=login)
+    dataset = dm_db.get_user_by_login(login=login)
+    assert len(dataset) == 0
     dm_api_facade.mailhog.delete_all_messages()
+
+
+def test_post_v1_account(dm_api_facade, dm_db):
+    # REGISTER NEW USER:
+
+
 
     if not dm_db.user_exists(login, email):
         response = dm_api_facade.account.register_new_user(
@@ -41,9 +52,9 @@ def test_post_v1_account(dm_api_facade, dm_db):
     session.add(new_user)
     session.commit()
 
-    dm_db.delete_user_by_login(login=login)
-    dataset = dm_db.get_user_by_login(login=login)
-    assert len(dataset) == 0
+
+
+
 
     dataset = dm_db.get_user_by_login(login=login)
     for row in dataset:
