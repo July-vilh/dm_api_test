@@ -2,6 +2,7 @@
 # Swagger -> import method to the Postman -> choose correct environment (for baseUrl) -> update data in Body (for registration) -> Code -> Python request -> update values in PyCharm and Run
 import time
 import uuid
+from collections import namedtuple
 
 import pytest
 from sqlalchemy.orm import Session
@@ -18,14 +19,14 @@ Session = sessionmaker(bind=engine)
 
 @pytest.fixture
 def prepare_user(dm_api_facade, dm_db):
-    login = "login000015"
-    email = "login000015@mail.ru"
-    password = "login_000015"
-
-    dm_db.delete_user_by_login(login=login)
-    dataset = dm_db.get_user_by_login(login=login)
+    user = namedtuple("User", "login, email, password")
+    User = user(login="login000015", email="login000015@mail.ru", password="login_000015")
+    dm_db.delete_user_by_login(login=User.login)
+    dataset = dm_db.get_user_by_login(login=User.login)
     assert len(dataset) == 0
     dm_api_facade.mailhog.delete_all_messages()
+
+    return User
 
 
 def test_post_v1_account(dm_api_facade, dm_db):
