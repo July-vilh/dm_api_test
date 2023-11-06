@@ -16,9 +16,9 @@ Session = sessionmaker(bind=engine)
 
 def test_post_v1_account(dm_api_facade, dm_db):
     # REGISTER NEW USER:
-    login = "login000013"
-    email = "login000013@mail.ru"
-    password = "login_000013"
+    login = "login000015"
+    email = "login000015@mail.ru"
+    password = "login_000015"
 
     dm_api_facade.mailhog.delete_all_messages()
 
