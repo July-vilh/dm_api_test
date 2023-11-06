@@ -30,11 +30,17 @@ def prepare_user(dm_api_facade, dm_db):
     return User
 
 
-def test_post_v1_account(dm_api_facade, dm_db, prepare_user):
+@pytest.mark.parametrize('login, email, password', [
+    ('login000017', 'login000017@mail.ru', 'login_000017'),
+    ('login', 'login@mail.ru', 'login'),
+    ('000017', '000017@mail.ru', '000017'),
+    ('///', '///@mail.ru', '///')
+])
+def test_post_v1_account(dm_api_facade, dm_db, login, email, password):
     # REGISTER NEW USER:
-    login = prepare_user.login
-    email = prepare_user.email
-    password = prepare_user.password
+
+    dm_db.delete_user_by_login(login=login)
+    dm_api_facade.mailhog.delete_all_messages()
 
     if not dm_db.user_exists(login, email):
         response = dm_api_facade.account.register_new_user(
