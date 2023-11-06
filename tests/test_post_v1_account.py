@@ -3,51 +3,22 @@
 import time
 import uuid
 from sqlalchemy.orm import Session
-
-import pytest
-
-from generic.helpers.dm_db import dmDB
-
 from tests.users_table import USERS
-from sqlalchemy.orm import sessionmaker
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import session
-from Services.dm_api_account import Facade
-import structlog
-from generic.helpers.mailhog import mailhog_api
+from sqlalchemy.orm import sessionmaker
 
-# engine = create_engine(db, echo=True)
-# Session = sessionmaker(bind=engine)
-# session = Session()
-
-structlog.configure(
-    processors=[
-        structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
-    ]
-)
-
-
-@pytest.fixture
-def mailhog():
-    return mailhog_api(host='http://5.63.153.31:5025/')
-
-
-@pytest.fixture
-def dm_api_facade(mailhog):
-    return Facade(host='http://5.63.153.31:5051', mailhog=mailhog)
-
-
-@pytest.fixture
-def dm_db():
-    db = dmDB(POSTGRES_USER='JULY', POSTGRES_PASSWORD="1356", POSTGRES_DB='JULYdb')
-    return db
+# Создайте engine (движок) для работы с базой данных
+engine = create_engine('postgresql://JULY:1356@localhost/JULYdb')
+# Создайте Session класс, связанный с engine
+Session = sessionmaker(bind=engine)
 
 
 def test_post_v1_account(dm_api_facade, dm_db):
     # REGISTER NEW USER:
-    login = "login000010"
-    email = "login000010@mail.ru"
-    password = "login_000010"
+    login = "login000013"
+    email = "login000013@mail.ru"
+    password = "login_000013"
 
     dm_api_facade.mailhog.delete_all_messages()
 
@@ -57,7 +28,6 @@ def test_post_v1_account(dm_api_facade, dm_db):
             email=email,
             password=password
         )
-
 
     new_user_info = {
         'Login': login,
