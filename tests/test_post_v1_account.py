@@ -31,10 +31,10 @@ def prepare_user(dm_api_facade, dm_db):
 
 
 @pytest.mark.parametrize('login, email, password', [
-    ('login000017', 'login000017@mail.ru', 'login_000017'),
-    ('login', 'login@mail.ru', 'login'),
-    ('000017', '000017@mail.ru', '000017'),
-    ('///', '///@mail.ru', '///')
+    ('login000019', 'login000019@mail.ru', 'login_000019'),
+    ('loginnnnnnnnnnn', 'loginnnnnnnnnnnnnn@mail.ru', 'loginnnnnnnnnnnnnn'),
+    ('000017777777777777777', '000017777777777777777@mail.ru', '0000177777777777777777'),
+    ('///////////////////////', '////////////////////@mail.ru', '/////////////////////////')
 ])
 def test_post_v1_account(dm_api_facade, dm_db, login, email, password):
     # REGISTER NEW USER:
