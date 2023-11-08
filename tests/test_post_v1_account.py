@@ -3,6 +3,8 @@
 import time
 import uuid
 from collections import namedtuple
+from random import random
+from string import ascii_letters, digits
 
 import pytest
 from sqlalchemy.orm import Session
@@ -37,9 +39,22 @@ def prepare_user(dm_api_facade, dm_db):
 #     ('///////////////////////', '////////////////////@mail.ru', '/////////////////////////')
 # ])
 
+def random_string():
+    symbols = ascii_letters + digits
+    string = ''
+    for _ in range(10):
+        string += random.choice(symbols)
+    return string
+
+
+# @pytest.mark.parametrize('login', ['1', '2', '3'])
+# @pytest.mark.parametrize('email', ['a@mail.ru', '2@mail.com', '//@vvhvhv1.avdv'])
+# @pytest.mark.parametrize('password', ['1', '2', '3'])
+
 @pytest.mark.parametrize('login', ['1', '2', '3'])
 @pytest.mark.parametrize('email', ['a@mail.ru', '2@mail.com', '//@vvhvhv1.avdv'])
 @pytest.mark.parametrize('password', ['1', '2', '3'])
+
 def test_post_v1_account(dm_api_facade, dm_db, login, email, password):
     # REGISTER NEW USER:
 
