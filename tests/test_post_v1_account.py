@@ -3,7 +3,7 @@
 import time
 import uuid
 from collections import namedtuple
-from random import random
+import random
 from string import ascii_letters, digits
 
 import pytest
@@ -51,9 +51,9 @@ def random_string():
 # @pytest.mark.parametrize('email', ['a@mail.ru', '2@mail.com', '//@vvhvhv1.avdv'])
 # @pytest.mark.parametrize('password', ['1', '2', '3'])
 
-@pytest.mark.parametrize('login', ['1', '2', '3'])
-@pytest.mark.parametrize('email', ['a@mail.ru', '2@mail.com', '//@vvhvhv1.avdv'])
-@pytest.mark.parametrize('password', ['1', '2', '3'])
+@pytest.mark.parametrize('login', [random_string() for _ in range(3)])
+@pytest.mark.parametrize('email', [random_string() + '@' + random_string() + '.ru' for _ in range(3)])
+@pytest.mark.parametrize('password', [random_string() for _ in range(3)])
 
 def test_post_v1_account(dm_api_facade, dm_db, login, email, password):
     # REGISTER NEW USER:
