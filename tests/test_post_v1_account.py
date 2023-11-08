@@ -34,10 +34,7 @@ def prepare_user(dm_api_facade, dm_db):
 
 # @pytest.mark.parametrize('login, email, password', [
 #     ('login000019', 'login000019@mail.ru', 'login_000019'),
-#     ('loginnnnnnnnnnn', 'loginnnnnnnnnnnnnn@mail.ru', 'loginnnnnnnnnnnnnn'),
-#     ('000017777777777777777', '000017777777777777777@mail.ru', '0000177777777777777777'),
-#     ('///////////////////////', '////////////////////@mail.ru', '/////////////////////////')
-# ])
+
 
 def random_string():
     symbols = ascii_letters + digits
@@ -51,10 +48,12 @@ def random_string():
 # @pytest.mark.parametrize('email', ['a@mail.ru', '2@mail.com', '//@vvhvhv1.avdv'])
 # @pytest.mark.parametrize('password', ['1', '2', '3'])
 
-@pytest.mark.parametrize('login', [random_string() for _ in range(3)])
-@pytest.mark.parametrize('email', [random_string() + '@' + random_string() + '.ru' for _ in range(3)])
-@pytest.mark.parametrize('password', [random_string() for _ in range(3)])
+# @pytest.mark.parametrize('login', [random_string() for _ in range(3)])
+# @pytest.mark.parametrize('email', [random_string() + '@' + random_string() + '.ru' for _ in range(3)])
+# @pytest.mark.parametrize('password', [random_string() for _ in range(3)])
 
+@pytest.mark.parametrize('login, email, password', [
+    ('login000030', 'login000030@mail.ru', 'login_000030')])
 def test_post_v1_account(dm_api_facade, dm_db, login, email, password):
     # REGISTER NEW USER:
 

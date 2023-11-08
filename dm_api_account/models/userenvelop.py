@@ -4,7 +4,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, Extra, Field, StrictStr
+from pydantic import ConfigDict, BaseModel, Extra, Field, StrictStr
 
 
 class UserRole(Enum):
@@ -17,8 +17,7 @@ class UserRole(Enum):
 
 
 class Rating(BaseModel):
-    class Config:
-        extra = Extra.forbid
+    model_config = ConfigDict(extra='forbid')
 
     enabled: Optional[bool] = Field(None, description='Rating participation flag')
     quality: Optional[int] = Field(None, description='Quality rating')
@@ -26,8 +25,7 @@ class Rating(BaseModel):
 
 
 class User(BaseModel):
-    class Config:
-        extra = Extra.forbid
+    model_config = ConfigDict(extra='forbid')
 
     login: Optional[StrictStr] = Field(None, description='Login')
     roles: Optional[List[UserRole]] = Field(None, description='Roles')
@@ -48,8 +46,7 @@ class User(BaseModel):
 
 
 class UserEnvelope(BaseModel):
-    class Config:
-        extra = Extra.forbid
+    model_config = ConfigDict(extra='forbid')
 
     resource: Optional[User] = None
     metadata: Optional[Any] = Field(None, description='Additional metadata')

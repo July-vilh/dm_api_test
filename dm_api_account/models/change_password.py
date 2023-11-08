@@ -3,12 +3,11 @@ from __future__ import annotations
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Extra, Field, StrictStr
+from pydantic import ConfigDict, BaseModel, Extra, Field, StrictStr
 
 
 class ChangePassword(BaseModel):
-    class Config:
-        extra = Extra.forbid
+    model_config = ConfigDict(extra='forbid')
 
     login: Optional[StrictStr] = Field(None, description='User login')
     token: Optional[UUID] = Field(None, description='Password reset token')
