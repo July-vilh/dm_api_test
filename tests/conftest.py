@@ -17,8 +17,9 @@ def mailhog():
 
 
 @pytest.fixture
-def dm_api_facade(mailhog):
-    return Facade(host='http://5.63.153.31:5051', mailhog=mailhog)
+def dm_api_facade(mailhog, request):
+    host = request.config.getoption('--env')
+    return Facade(host=host, mailhog=mailhog)
 
 
 @pytest.fixture
@@ -26,5 +27,6 @@ def dm_db():
     db = dmDB(POSTGRES_USER='JULY', POSTGRES_PASSWORD="1356", POSTGRES_DB='JULYdb')
     return db
 
-# def pytest_addoption(parser):
-#     parser.addoption('--env', action='store', default='http://5.63.153.31:5051')
+
+def pytest_addoption(parser):
+    parser.addoption('--env', action='store', default='http://5.63.153.31:5051')
