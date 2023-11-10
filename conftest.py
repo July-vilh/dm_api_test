@@ -26,5 +26,5 @@ def dm_db():
     db = dmDB(POSTGRES_USER='JULY', POSTGRES_PASSWORD="1356", POSTGRES_DB='JULYdb')
     return db
 
-# def pytest_addoption(parser):
-#     parser.addoption('--env', action='store', default='http://5.63.153.31:5051')
+def pytest_addoption(parser):
+    parser.addoption('--env', action='store', default='http://5.63.153.31:5051')

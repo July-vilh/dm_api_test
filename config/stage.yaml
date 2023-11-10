@@ -1,0 +1,11 @@
+servise:
+  dm_api_account: http://5.63.153.31:5051
+  mailhog: http://5.63.153.31:5025/
+
+database:
+  JULYdb:
+    host: localhost
+    port: 5432
+    POSTGRES_USER: JULY
+    POSTGRES_PASSWORD: 1356
+    POSTGRES_DB: JULYdb
