@@ -53,7 +53,7 @@ def random_string():
 # @pytest.mark.parametrize('password', [random_string() for _ in range(3)])
 
 @pytest.mark.parametrize('login, email, password', [
-    ('login000031', 'login000031@mail.ru', 'login_000031')])
+    ('login000032', 'login000032@mail.ru', 'login_000032')])
 def test_post_v1_account(dm_api_facade, dm_db, login, email, password):
     # REGISTER NEW USER:
 

@@ -15,13 +15,12 @@ structlog.configure(
 
 @pytest.fixture
 def mailhog():
-    return mailhog_api(host='http://5.63.153.31:5025/')
+    return mailhog_api(host=v.get('service.mailhog'))
 
 
 @pytest.fixture
-def dm_api_facade(mailhog, request):
-    host = request.config.getoption('--env')
-    return Facade(host=host, mailhog=mailhog)
+def dm_api_facade(mailhog):
+    return Facade(host=v.get('service.dm_api_account'))
 
 
 options = (
@@ -33,7 +32,12 @@ options = (
 
 @pytest.fixture
 def dm_db():
-    db = dmDB(POSTGRES_USER='JULY', POSTGRES_PASSWORD="1356", POSTGRES_DB='JULYdb')
+    db = dmDB(
+        POSTGRES_USER=v.get('database.JULYdb.POSTGRES_USER'),
+        POSTGRES_PASSWORD=v.get('database.JULYdb.POSTGRES_PASSWORD'),
+        POSTGRES_DB=v.get('database.JULYdb.POSTGRES_DB'),
+        host=v.get('database.JULYdb.host')
+    )
     return db
 
 
