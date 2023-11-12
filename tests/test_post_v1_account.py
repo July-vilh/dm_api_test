@@ -20,22 +20,6 @@ engine = create_engine('postgresql://JULY:1356@localhost/JULYdb')
 Session = sessionmaker(bind=engine)
 
 
-@pytest.fixture
-def prepare_user(dm_api_facade, dm_db):
-    user = namedtuple("User", "login, email, password")
-    User = user(login="login000017", email="login000017@mail.ru", password="login_000017")
-    dm_db.delete_user_by_login(login=User.login)
-    dataset = dm_db.get_user_by_login(login=User.login)
-    assert len(dataset) == 0
-    dm_api_facade.mailhog.delete_all_messages()
-
-    return User
-
-
-# @pytest.mark.parametrize('login, email, password', [
-#     ('login000019', 'login000019@mail.ru', 'login_000019'),
-
-
 def random_string():
     symbols = ascii_letters + digits
     string = ''
@@ -44,65 +28,103 @@ def random_string():
     return string
 
 
-# @pytest.mark.parametrize('login', ['1', '2', '3'])
-# @pytest.mark.parametrize('email', ['a@mail.ru', '2@mail.com', '//@vvhvhv1.avdv'])
-# @pytest.mark.parametrize('password', ['1', '2', '3'])
+class TestPostV1Account:
 
-# @pytest.mark.parametrize('login', [random_string() for _ in range(3)])
-# @pytest.mark.parametrize('email', [random_string() + '@' + random_string() + '.ru' for _ in range(3)])
-# @pytest.mark.parametrize('password', [random_string() for _ in range(3)])
+    @pytest.fixture
+    def prepare_user(self, dm_api_facade, dm_db):
+        user = namedtuple("User", "login, email, password")
+        User = user(login="login000017", email="login000017@mail.ru", password="login_000017")
+        dm_db.delete_user_by_login(login=User.login)
+        dataset = dm_db.get_user_by_login(login=User.login)
+        assert len(dataset) == 0
+        dm_api_facade.mailhog.delete_all_messages()
 
-@pytest.mark.parametrize('login, email, password', [
-    ('login000035', 'login000035@mail.ru', 'login_000035')])
-def test_post_v1_account(dm_api_facade, dm_db, login, email, password):
-    # REGISTER NEW USER:
+        return User
 
-    dm_db.delete_user_by_login(login=login)
-    dm_api_facade.mailhog.delete_all_messages()
+    def test_post_v1_account(self, dm_api_facade, dm_db, prepare_user):
+        # REGISTER NEW USER:
+        login = prepare_user.login
+        email = prepare_user.email
+        password = prepare_user.password
 
-    if not dm_db.user_exists(login, email):
-        response = dm_api_facade.account.register_new_user(
-            login=login,
-            email=email,
-            password=password
-        )
+        if not dm_db.user_exists(login, email):
+            response = dm_api_facade.account.register_new_user(
+                login=login,
+                email=email,
+                password=password
+            )
 
-    new_user_info = {
-        'Login': login,
-        'Email': email,
-        'Password': password
-    }
+        new_user_info = {
+            'Login': login,
+            'Email': email,
+            'Password': password
+        }
 
-    session = Session()
-    new_user = USERS(**new_user_info)
-    new_user.UserId = str(uuid.uuid4())
-    session.add(new_user)
-    session.commit()
+        session = Session()
+        new_user = USERS(**new_user_info)
+        new_user.UserId = str(uuid.uuid4())
+        session.add(new_user)
+        session.commit()
 
-    dataset = dm_db.get_user_by_login(login=login)
-    for row in dataset:
-        assert_that(row, has_entries(
-            {
-                "Login": login
+        dataset = dm_db.get_user_by_login(login=login)
+        for row in dataset:
+            assert_that(row, has_entries(
+                {
+                    "Login": login
+                }
+            ))
+
+        # REGISTER ACTIVATE USER:
+        dm_api_facade.account.activate_registered_user(login=login)
+        time.sleep(2)
+        dataset = dm_db.get_user_by_login(login=login)
+
+        # LOGIN USER:
+        dm_api_facade.login.login_user(login=login, password=password)
+
+    @pytest.mark.parametrize('login', [random_string() for _ in range(3)])
+    @pytest.mark.parametrize('email', [random_string() + '@' + random_string() + '.ru' for _ in range(3)])
+    @pytest.mark.parametrize('password', [random_string() for _ in range(3)])
+    def test_post_v1_account_2(self, dm_api_facade, dm_db, login, email, password):
+        # REGISTER NEW USER:
+
+        dm_db.delete_user_by_login(login=login)
+        dm_api_facade.mailhog.delete_all_messages()
+
+        if not dm_db.user_exists(login, email):
+            response = dm_api_facade.account.register_new_user(
+                login=login,
+                email=email,
+                password=password
+            )
+
+            new_user_info = {
+                'Login': login,
+                'Email': email,
+                'Password': password
             }
-        ))
-        # assert row['Login'] == login, f"User {login} not registered"
 
-    # REGISTER ACTIVATE USER:
-    dm_api_facade.account.activate_registered_user(login=login)
-    time.sleep(2)
-    dataset = dm_db.get_user_by_login(login=login)
-    # for row in dataset:
-    #     assert_that(row, has_entries(
-    #         {
-    #             "Status": True
-    #         }
-    #     ))
+            session = Session()
+            new_user = USERS(**new_user_info)
+            new_user.UserId = str(uuid.uuid4())
+            session.add(new_user)
+            session.commit()
 
-        # assert row['Status'] is True, f"User {login} not activated"
+            dataset = dm_db.get_user_by_login(login=login)
+            for row in dataset:
+                assert_that(row, has_entries(
+                    {
+                        "Login": login
+                    }
+                ))
 
-    # LOGIN USER:
-    dm_api_facade.login.login_user(login=login, password=password)
+            # REGISTER ACTIVATE USER:
+            dm_api_facade.account.activate_registered_user(login=login)
+            time.sleep(2)
+            dataset = dm_db.get_user_by_login(login=login)
+
+            # LOGIN USER:
+            dm_api_facade.login.login_user(login=login, password=password)
 
 # def check_input_json_request(json):
 #     for key, value in json.tems():
