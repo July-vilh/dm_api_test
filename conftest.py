@@ -1,3 +1,5 @@
+import os
+
 import pytest
 from generic.helpers.dm_db import dmDB
 from Services.dm_api_account import Facade
@@ -20,7 +22,10 @@ def mailhog():
 
 @pytest.fixture
 def dm_api_facade(mailhog):
-    return Facade(host=v.get('service.dm_api_account'))
+    return Facade(
+        host=v.get('service.dm_api_account'),
+        mailhog=mailhog
+    )
 
 
 options = (
@@ -36,7 +41,7 @@ def dm_db():
         POSTGRES_USER=v.get('database.JULYdb.POSTGRES_USER'),
         POSTGRES_PASSWORD=v.get('database.JULYdb.POSTGRES_PASSWORD'),
         POSTGRES_DB=v.get('database.JULYdb.POSTGRES_DB'),
-        host=v.get('database.JULYdb.host')
+        # host=v.get('database.JULYdb.host')
     )
     return db
 
