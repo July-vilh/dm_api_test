@@ -21,6 +21,12 @@ def dm_api_facade(mailhog, request):
     host = request.config.getoption('--env')
     return Facade(host=host, mailhog=mailhog)
 
+options = (
+    'service.dm_api_account',
+    'service.mailhog',
+    'database.JULYdb.host'
+)
+
 
 @pytest.fixture
 def dm_db():
@@ -29,4 +35,7 @@ def dm_db():
 
 
 def pytest_addoption(parser):
-    parser.addoption('--env', action='store', default='http://5.63.153.31:5051')
+    parser.addoption('--env', action='store', default='stage')
+    for option in options:
+        parser.addoption(f'--{option}', action='store', default=None)
+
