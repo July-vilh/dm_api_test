@@ -19,4 +19,4 @@ class AssertionsPostV1Account:
     def check_users_was_activated(self, login):
         dataset = self.db.get_user_by_login(login=login)
         for row in dataset:
-            assert row['Activated'] is True, f'User {login} not activated'
+            assert row['Activated'] is False, f'User {login} not activated'

@@ -1,5 +1,3 @@
-# import os
-#
 # import pytest
 #
 # from generic.assertions.post_v1_account import AssertionsPostV1Account
@@ -47,9 +45,11 @@
 #     )
 #     return db
 #
+#
 # @pytest.fixture
 # def assertions(dm_db):
 #     return AssertionsPostV1Account(dm_db)
+#
 #
 # @pytest.fixture(autouse=True)
 # def set_config(request):

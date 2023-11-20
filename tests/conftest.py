@@ -45,9 +45,11 @@ def dm_db():
     )
     return db
 
+
 @pytest.fixture
 def assertions(dm_db):
     return AssertionsPostV1Account(dm_db)
+
 
 @pytest.fixture(autouse=True)
 def set_config(request):
