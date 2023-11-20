@@ -122,6 +122,8 @@ class TestPostV1Account:
             dm_api_facade.account.activate_registered_user(login=login)
             time.sleep(2)
             dataset = dm_db.get_user_by_login(login=login)
+            for row in dataset:
+                assert row['Activated'] is True, f'User {login} not activated'
 
             # LOGIN USER:
             dm_api_facade.login.login_user(login=login, password=password)
