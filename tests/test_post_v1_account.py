@@ -33,7 +33,7 @@ class TestPostV1Account:
     @pytest.fixture
     def prepare_user(self, dm_api_facade, dm_db):
         user = namedtuple("User", "login, email, password")
-        User = user(login="login000017", email="login000017@mail.ru", password="login_000017")
+        User = user(login="login000018", email="login000018@mail.ru", password="login_000018")
         dm_db.delete_user_by_login(login=User.login)
         dataset = dm_db.get_user_by_login(login=User.login)
         assert len(dataset) == 0
@@ -41,14 +41,14 @@ class TestPostV1Account:
 
         return User
 
-    def test_post_v1_account(self, dm_api_facade, dm_db, prepare_user):
+    def test_post_v1_account(self, dm_api_facade, dm_db, prepare_user, assertions):
         # REGISTER NEW USER:
         login = prepare_user.login
         email = prepare_user.email
         password = prepare_user.password
 
         if not dm_db.user_exists(login, email):
-            response = dm_api_facade.account.register_new_user(
+            dm_api_facade.account.register_new_user(
                 login=login,
                 email=email,
                 password=password
@@ -66,18 +66,11 @@ class TestPostV1Account:
         session.add(new_user)
         session.commit()
 
-        dataset = dm_db.get_user_by_login(login=login)
-        for row in dataset:
-            assert_that(row, has_entries(
-                {
-                    "Login": login
-                }
-            ))
+        assertions.check_users_was_created(login=login)
 
         # REGISTER ACTIVATE USER:
         dm_api_facade.account.activate_registered_user(login=login)
-        time.sleep(2)
-        dataset = dm_db.get_user_by_login(login=login)
+        assertions.check_users_was_activated()
 
         # LOGIN USER:
         dm_api_facade.login.login_user(login=login, password=password)
@@ -85,14 +78,14 @@ class TestPostV1Account:
     @pytest.mark.parametrize('login', [random_string() for _ in range(3)])
     @pytest.mark.parametrize('email', [random_string() + '@' + random_string() + '.ru' for _ in range(3)])
     @pytest.mark.parametrize('password', [random_string() for _ in range(3)])
-    def test_post_v1_account_2(self, dm_api_facade, dm_db, login, email, password):
+    def test_create_and_activated_user_with_random_params(self, dm_api_facade, dm_db, login, email, password, assertions):
         # REGISTER NEW USER:
 
         dm_db.delete_user_by_login(login=login)
         dm_api_facade.mailhog.delete_all_messages()
 
         if not dm_db.user_exists(login, email):
-            response = dm_api_facade.account.register_new_user(
+            dm_api_facade.account.register_new_user(
                 login=login,
                 email=email,
                 password=password
@@ -110,20 +103,11 @@ class TestPostV1Account:
             session.add(new_user)
             session.commit()
 
-            dataset = dm_db.get_user_by_login(login=login)
-            for row in dataset:
-                assert_that(row, has_entries(
-                    {
-                        "Login": login
-                    }
-                ))
+            asserions.check_users_was_created(login=login)
 
             # REGISTER ACTIVATE USER:
             dm_api_facade.account.activate_registered_user(login=login)
-            time.sleep(2)
-            dataset = dm_db.get_user_by_login(login=login)
-            for row in dataset:
-                assert row['Activated'] is True, f'User {login} not activated'
+            asserions.check_users_was_activated()
 
             # LOGIN USER:
             dm_api_facade.login.login_user(login=login, password=password)

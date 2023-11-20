@@ -1,9 +1,10 @@
 from hamcrest import assert_that, has_entries
+from generic.helpers.dm_db import dmDB
 
 
 class AssertionsPostV1Account:
 
-    def __int__(self, db):
+    def __init__(self, db: dmDB):
         self.db = db
 
     def check_users_was_created(self, login):
