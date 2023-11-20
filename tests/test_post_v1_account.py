@@ -41,7 +41,7 @@ class TestPostV1Account:
 
         return User
 
-    def test_post_v1_account(self, dm_api_facade, dm_db, prepare_user, assertions):
+    def test_register_and_activate_user(self, dm_api_facade, dm_db, prepare_user, assertions):
         # REGISTER NEW USER:
         login = prepare_user.login
         email = prepare_user.email
