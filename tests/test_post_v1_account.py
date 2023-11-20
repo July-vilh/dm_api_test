@@ -33,7 +33,7 @@ class TestPostV1Account:
     @pytest.fixture
     def prepare_user(self, dm_api_facade, dm_db):
         user = namedtuple("User", "login, email, password")
-        User = user(login="login000018", email="login000018@mail.ru", password="login_000018")
+        User = user(login="login0000199", email="login0000199@mail.ru", password="login_0000199")
         dm_db.delete_user_by_login(login=User.login)
         dataset = dm_db.get_user_by_login(login=User.login)
         assert len(dataset) == 0
@@ -70,7 +70,7 @@ class TestPostV1Account:
 
         # REGISTER ACTIVATE USER:
         dm_api_facade.account.activate_registered_user(login=login)
-        assertions.check_users_was_activated()
+        assertions.check_users_was_activated(login=login)
 
         # LOGIN USER:
         dm_api_facade.login.login_user(login=login, password=password)
@@ -103,11 +103,11 @@ class TestPostV1Account:
             session.add(new_user)
             session.commit()
 
-            asserions.check_users_was_created(login=login)
+            assertions.check_users_was_created(login=login)
 
             # REGISTER ACTIVATE USER:
             dm_api_facade.account.activate_registered_user(login=login)
-            asserions.check_users_was_activated()
+            assertions.check_users_was_activated(login=login)
 
             # LOGIN USER:
             dm_api_facade.login.login_user(login=login, password=password)
