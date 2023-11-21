@@ -21,7 +21,7 @@ class dmDB:
         return dataset
 
     def delete_user_by_login(self, login):
-        query = f'''
+        query = '''
           delete from "public"."users"
           where "Login" = '{login}'
           '''

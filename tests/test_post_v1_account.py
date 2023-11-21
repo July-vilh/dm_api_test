@@ -75,16 +75,15 @@ class TestPostV1Account:
     #     # LOGIN USER:
     #     dm_api_facade.login.login_user(login=login, password=password)
 
-
     @pytest.mark.parametrize('login', [random_string() for _ in range(2)])
     @pytest.mark.parametrize('email', [random_string() + '@mail' + '.ru' for _ in range(2)])
     @pytest.mark.parametrize('password', [random_string() for _ in range(2)])
-    def test_create_and_activated_user_with_random_params(self, dm_api_facade, dm_db, login, email, password, assertions):
+    def test_create_and_activated_user_with_random_params(self, dm_api_facade, dm_db, login, email, password,
+                                                          assertions):
         # REGISTER NEW USER:
         dm_db.delete_user_by_login(login=login)
 
         dm_api_facade.mailhog.delete_all_messages()
-
 
         if not dm_db.user_exists(login, email):
             dm_api_facade.account.register_new_user(
