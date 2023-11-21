@@ -8,4 +8,4 @@ def validate_request_json(json):
 
 
 def validate_status_code(response: requests.Response, status_code: int):
-    assert response.status_code == status_code, f'Status code should be equal status_code, but now status code {response.status_code} '
+    assert response.status_code == status_code, f'Status code should be equal {status_code}, but now status code {response.status_code} '
