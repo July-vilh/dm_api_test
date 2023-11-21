@@ -2,7 +2,7 @@
 
 # import json
 from hamcrest import assert_that, has_properties
-from Services.dm_api_account import dmapiaccount
+from Services.dm_api_account import Facade
 from generic.helpers.mailhog import mailhog_api
 import structlog
 
@@ -16,7 +16,7 @@ structlog.configure(
 
 def test_put_v1_account_token():
     mailhog = mailhog_api(host='http://5.63.153.31:5025/')
-    api = dmapiaccount(host=f'http://5.63.153.31:5051')
+    api = Facade(host=f'http://5.63.153.31:5051')
 
     token = mailhog.get_token_from_last_email()
     response = api.account.put_v1_account_token(token=token)
