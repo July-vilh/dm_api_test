@@ -1,6 +1,6 @@
 # 1. Calling the user registration method (POST)
 # Swagger -> import method to the Postman -> choose correct environment (for baseUrl) -> update data in Body (for registration) -> Code -> Python request -> update values in PyCharm and Run
-import time
+
 import uuid
 from collections import namedtuple
 import random
@@ -12,7 +12,6 @@ from tests.users_table import USERS
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from hamcrest import assert_that, has_entries
 
 # Создайте engine (движок) для работы с базой данных
 engine = create_engine('postgresql://JULY:1356@localhost/JULYdb')
