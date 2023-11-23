@@ -32,10 +32,11 @@ def random_string():
 @allure.sub_suite("Positive checks")
 class TestPostV1Account:
 
+    @allure.step("Preparing of test user")
     @pytest.fixture
     def prepare_user(self, dm_api_facade, dm_db):
         user = namedtuple("User", "login, email, password")
-        User = user(login="login00003013", email="login00003013@mail.ru", password="login_00003013")
+        User = user(login="login00003014", email="login00003014@mail.ru", password="login_00003014")
         dm_db.delete_user_by_login(login=User.login)
         dataset = dm_db.get_user_by_login(login=User.login)
         assert len(dataset) == 0
@@ -50,33 +51,37 @@ class TestPostV1Account:
         email = prepare_user.email
         password = prepare_user.password
 
-        if not dm_db.user_exists(login, email):
-            dm_api_facade.account.register_new_user(
-                login=login,
-                email=email,
-                password=password
-            )
+        with allure.step("Register of new user"):
+            if not dm_db.user_exists(login, email):
+                dm_api_facade.account.register_new_user(
+                    login=login,
+                    email=email,
+                    password=password
+                )
+        with allure.step("Adding new user at DB"):
+            new_user_info = {
+                'Login': login,
+                'Email': email,
+                'Password': password
+            }
 
-        new_user_info = {
-            'Login': login,
-            'Email': email,
-            'Password': password
-        }
+            session = Session()
+            new_user = USERS(**new_user_info)
+            new_user.UserId = str(uuid.uuid4())
+            session.add(new_user)
+            session.commit()
 
-        session = Session()
-        new_user = USERS(**new_user_info)
-        new_user.UserId = str(uuid.uuid4())
-        session.add(new_user)
-        session.commit()
-
-        assertions.check_users_was_created(login=login)
+        with allure.step("Check that user was created"):
+            assertions.check_users_was_created(login=login)
 
         # REGISTER ACTIVATE USER:
-        dm_api_facade.account.activate_registered_user(login=login)
+        with allure.step("Activate of register user"):
+            dm_api_facade.account.activate_registered_user(login=login)
         # assertions.check_users_was_activated(login=login)
 
         # LOGIN USER:
-        dm_api_facade.login.login_user(login=login, password=password)
+        with allure.step("Log in user"):
+            dm_api_facade.login.login_user(login=login, password=password)
 
     @pytest.mark.parametrize('login', [random_string() for _ in range(2)])
     @pytest.mark.parametrize('email', [random_string() + '@mail' + '.ru' for _ in range(2)])
