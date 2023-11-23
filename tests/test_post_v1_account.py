@@ -28,12 +28,14 @@ def random_string():
     return string
 
 
+@allure.suite("Tests for checking method POST{host}/v1/account")
+@allure.sub_suite("Positive checks")
 class TestPostV1Account:
 
     @pytest.fixture
     def prepare_user(self, dm_api_facade, dm_db):
         user = namedtuple("User", "login, email, password")
-        User = user(login="login00003012", email="login00003012@mail.ru", password="login_00003012")
+        User = user(login="login00003013", email="login00003013@mail.ru", password="login_00003013")
         dm_db.delete_user_by_login(login=User.login)
         dataset = dm_db.get_user_by_login(login=User.login)
         assert len(dataset) == 0
