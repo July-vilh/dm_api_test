@@ -51,13 +51,13 @@ class TestPostV1Account:
         email = prepare_user.email
         password = prepare_user.password
 
-        with allure.step("Register of new user"):
-            if not dm_db.user_exists(login, email):
-                dm_api_facade.account.register_new_user(
-                    login=login,
-                    email=email,
-                    password=password
-                )
+        if not dm_db.user_exists(login, email):
+            dm_api_facade.account.register_new_user(
+                login=login,
+                email=email,
+                password=password
+            )
+
         with allure.step("Adding new user at DB"):
             new_user_info = {
                 'Login': login,

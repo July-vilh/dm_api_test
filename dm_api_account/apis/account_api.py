@@ -1,3 +1,4 @@
+import allure
 import requests
 from requests import Response
 from model import *
@@ -22,11 +23,13 @@ class AccountApi:
         return response
 
     def post_v1_account(self, json: Registration, status_code=201, **kwargs) -> Response:
-        response = self.client.post(
-            path=f"/v1/account",
-            json=validate_request_json(json),
-            **kwargs
-        )
+
+        with allure.step("Register of new user"):
+            response = self.client.post(
+                path=f"/v1/account",
+                json=validate_request_json(json),
+                **kwargs
+            )
         validate_status_code(response, status_code)
         return response
 
