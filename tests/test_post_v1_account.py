@@ -6,6 +6,7 @@ from collections import namedtuple
 import random
 from string import ascii_letters, digits
 
+import allure
 import pytest
 from sqlalchemy.orm import Session
 from tests.users_table import USERS
@@ -32,7 +33,7 @@ class TestPostV1Account:
     @pytest.fixture
     def prepare_user(self, dm_api_facade, dm_db):
         user = namedtuple("User", "login, email, password")
-        User = user(login="login00003002", email="login00003002@mail.ru", password="login_00003002")
+        User = user(login="login00003012", email="login00003012@mail.ru", password="login_00003012")
         dm_db.delete_user_by_login(login=User.login)
         dataset = dm_db.get_user_by_login(login=User.login)
         assert len(dataset) == 0
@@ -40,6 +41,7 @@ class TestPostV1Account:
 
         return User
 
+    @allure.title("Checking of registration and activation USERS")
     def test_register_and_activate_user(self, dm_api_facade, dm_db, prepare_user, assertions):
         # REGISTER NEW USER:
         login = prepare_user.login
