@@ -1,6 +1,6 @@
 # 5. Calling method for change password (POST)
 
-from Services.dm_api_account import dmapiaccount
+from Services.dm_api_account import Facade
 from generic.helpers.mailhog import mailhog_api
 import structlog
 
@@ -13,7 +13,7 @@ structlog.configure(
 
 def test_post_v1_account():
     mailhog = mailhog_api(host='http://5.63.153.31:5025/')
-    api = dmapiaccount(host='http://5.63.153.31:5051')
+    api = Facade(host='http://5.63.153.31:5051')
     create_password_json = {
         "login": 555559,
         "oldPassword": "login_221",
