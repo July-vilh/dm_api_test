@@ -36,7 +36,7 @@ class TestPostV1Account:
     @pytest.fixture
     def prepare_user(self, dm_api_facade, dm_db):
         user = namedtuple("User", "login, email, password")
-        User = user(login="login00003020", email="login00003020@mail.ru", password="login_00003020")
+        User = user(login="login00003022", email="login00003022@mail.ru", password="login_00003022")
         dm_db.delete_user_by_login(login=User.login)
         dataset = dm_db.get_user_by_login(login=User.login)
         assert len(dataset) == 0
