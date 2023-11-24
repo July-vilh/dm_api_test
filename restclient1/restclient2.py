@@ -1,4 +1,7 @@
+import json
 import uuid
+
+import allure
 import curlify
 import requests.exceptions
 from requests import session, Response
@@ -14,6 +17,7 @@ class restclient3:
         self.log = structlog.get_logger(self.__class__.__name__).bind(service='api')
 
     def post(self, path: str, **kwargs) -> Response:
+        allure.attach(json.dumps(kwargs.get('json'), indent=2), attachment_type=allure.attachment_type.JSON)
         return self._send_request('POST', path, **kwargs)
 
     def get(self, path: str, **kwargs) -> Response:
