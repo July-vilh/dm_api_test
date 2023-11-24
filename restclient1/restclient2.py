@@ -23,6 +23,10 @@ def allure_attach(fn):
                 name = 'response',
                 attachment_type = allure.attachment_type.TEXT
             )
+        else:
+            allure_attach(json.dumps(kwargs.get('json'), indent=2), name='request', attachment_type=allure.attachment_type.JSON)
+        return response
+    return wrapper
 
 
 
@@ -34,13 +38,16 @@ class restclient3:
             self.session.headers.update(headers)
         self.log = structlog.get_logger(self.__class__.__name__).bind(service='api')
 
+    @allure_attach
     def post(self, path: str, **kwargs) -> Response:
         allure.attach(json.dumps(kwargs.get('json'), indent=2), name='request', attachment_type=allure.attachment_type.JSON)
         return self._send_request('POST', path, **kwargs)
 
+    @allure_attach
     def get(self, path: str, **kwargs) -> Response:
         return self._send_request('GET', path, **kwargs)
 
+    @allure_attach
     def put(self, path: str, **kwargs) -> Response:
         return self._send_request('PUT', path, **kwargs)
 
