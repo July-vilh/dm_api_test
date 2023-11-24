@@ -3,7 +3,7 @@ import time
 
 from requests import Response
 # import pprint
-from restclient1.restclient2 import restclient3
+from common_libs.restclient1.restclient2 import restclient3
 
 
 def decorator(fn):

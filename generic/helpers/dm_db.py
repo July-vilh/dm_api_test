@@ -1,6 +1,4 @@
-from sqlalchemy import text
-
-from db_client.db_client import DBClient
+from common_libs.db_client.db_client import DBClient
 
 
 class dmDB:

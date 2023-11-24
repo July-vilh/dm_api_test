@@ -1,8 +1,7 @@
-import requests
 from requests import Response
 from model import *
-from restclient1.restclient2 import restclient3
-from dm_api_account.utilities import validate_request_json, validate_status_code
+from common_libs.restclient1.restclient2 import restclient3
+from apis.dm_api_account.utilities import validate_request_json, validate_status_code
 
 
 class LoginApi:
