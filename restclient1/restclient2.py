@@ -73,7 +73,7 @@ class restclient3:
         curl = curlify.to_curl(response.request)
         allure.attach(
             curl,
-            name='response',
+            name='curl',
             attachment_type=allure.attachment_type.TEXT
         )
         print(curl)
