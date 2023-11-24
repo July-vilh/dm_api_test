@@ -24,7 +24,7 @@ def allure_attach(fn):
                 attachment_type=allure.attachment_type.TEXT
             )
         else:
-            allure.attach(json.dumps(response_json, indent=2), name='request', attachment_type=allure.attachment_type.JSON)
+            allure.attach(json.dumps(response_json, indent=2), name='response', attachment_type=allure.attachment_type.JSON)
         return response
     return wrapper
 

@@ -34,16 +34,21 @@ options = (
     'database.JULYdb.host'
 )
 
+connect = None
+
 
 @pytest.fixture
 def dm_db():
-    db = dmDB(
-        POSTGRES_USER=v.get('database.JULYdb.POSTGRES_USER'),
-        POSTGRES_PASSWORD=v.get('database.JULYdb.POSTGRES_PASSWORD'),
-        POSTGRES_DB=v.get('database.JULYdb.POSTGRES_DB'),
-        # host=v.get('database.JULYdb.host')
-    )
-    return db
+    global connect
+    if connect is None:
+        connect = dmDB(
+            POSTGRES_USER=v.get('database.JULYdb.POSTGRES_USER'),
+            POSTGRES_PASSWORD=v.get('database.JULYdb.POSTGRES_PASSWORD'),
+            POSTGRES_DB=v.get('database.JULYdb.POSTGRES_DB'),
+            # host=v.get('database.JULYdb.host')
+        )
+    yield connect
+    connect.db.db.close()
 
 
 @pytest.fixture
