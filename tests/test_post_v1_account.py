@@ -71,17 +71,14 @@ class TestPostV1Account:
             session.add(new_user)
             session.commit()
 
-        with allure.step("Check that user was created"):
-            assertions.check_users_was_created(login=login)
+        assertions.check_users_was_created(login=login)
 
         # REGISTER ACTIVATE USER:
-        with allure.step("Activate of register user"):
-            dm_api_facade.account.activate_registered_user(login=login)
+        dm_api_facade.account.activate_registered_user(login=login)
         # assertions.check_users_was_activated(login=login)
 
         # LOGIN USER:
-        with allure.step("Log in user"):
-            dm_api_facade.login.login_user(login=login, password=password)
+        dm_api_facade.login.login_user(login=login, password=password)
 
     @pytest.mark.parametrize('login', [random_string() for _ in range(2)])
     @pytest.mark.parametrize('email', [random_string() + '@mail' + '.ru' for _ in range(2)])

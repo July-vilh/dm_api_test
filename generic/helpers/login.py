@@ -1,3 +1,5 @@
+import allure
+
 from dm_api_account.models import LoginCredentials
 
 
@@ -6,15 +8,16 @@ class Login:
         self.facade = facade
 
     def login_user(self, login: str, password: str, remember_me: bool = True):
-        response = self.facade.login_api.post_account_login(
-            json=LoginCredentials(
-                login=login,
-                password=password,
-                rememberMe=remember_me
-            ),
-            # ожидаемый статус код:
-            status_code=200
-        )
+        with allure.step("Log in user"):
+            response = self.facade.login_api.post_account_login(
+                json=LoginCredentials(
+                    login=login,
+                    password=password,
+                    rememberMe=remember_me
+                )
+                # ожидаемый статус код:
+                # status_code=200
+            )
         return response
 
     # для методов которые вместо параметров исп-ся авторизац. токен
