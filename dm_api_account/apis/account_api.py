@@ -30,6 +30,7 @@ class AccountApi:
                 json=validate_request_json(json),
                 **kwargs
             )
+
         validate_status_code(response, status_code)
         return response
 

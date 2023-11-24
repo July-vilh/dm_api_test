@@ -14,9 +14,9 @@ class Login:
                     login=login,
                     password=password,
                     rememberMe=remember_me
-                )
+                ),
                 # ожидаемый статус код:
-                # status_code=200
+                status_code=200
             )
         return response
 
