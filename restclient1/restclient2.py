@@ -7,6 +7,24 @@ import requests.exceptions
 from requests import session, Response
 import structlog
 
+def allure_attach(fn):
+    def wrapper(*args, **kwargs):
+        body = kwargs.get('json')
+        if body:
+            allure_attach(json.dumps(kwargs.get('json'), indent=2), name='request', attachment_type=allure.attachment_type.JSON)
+        response = fn(*args, **kwargs)
+        try:
+            response_json = response.json()
+        except requests.exceptions.JSONDecodeError:
+            response_text = response.text
+            status_code = f'< status_code {response.status_code} >'
+            allure_attach(
+                response_text if len(response_text) > 0 else status_code,
+                name = 'response',
+                attachment_type = allure.attachment_type.TEXT
+            )
+
+
 
 class restclient3:
     def __init__(self, host, headers=None):
@@ -17,7 +35,7 @@ class restclient3:
         self.log = structlog.get_logger(self.__class__.__name__).bind(service='api')
 
     def post(self, path: str, **kwargs) -> Response:
-        allure.attach(json.dumps(kwargs.get('json'), indent=2), attachment_type=allure.attachment_type.JSON)
+        allure.attach(json.dumps(kwargs.get('json'), indent=2), name='request', attachment_type=allure.attachment_type.JSON)
         return self._send_request('POST', path, **kwargs)
 
     def get(self, path: str, **kwargs) -> Response:
