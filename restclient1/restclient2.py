@@ -20,8 +20,8 @@ def allure_attach(fn):
             status_code = f'< status_code {response.status_code} >'
             allure.attach(
                 response_text if len(response_text) > 0 else status_code,
-                name = 'response',
-                attachment_type = allure.attachment_type.TEXT
+                name='response',
+                attachment_type=allure.attachment_type.TEXT
             )
         else:
             allure.attach(json.dumps(response_json, indent=2), name='request', attachment_type=allure.attachment_type.JSON)
