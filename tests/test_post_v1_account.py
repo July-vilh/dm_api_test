@@ -13,6 +13,7 @@ from tests.users_table import USERS
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from data.post_v1_account import PostV1AccountData as user_data
 
 # Создайте engine (движок) для работы с базой данных
 engine = create_engine('postgresql://JULY:1356@localhost/JULYdb')
@@ -36,7 +37,7 @@ class TestPostV1Account:
     @pytest.fixture
     def prepare_user(self, dm_api_facade, dm_db):
         user = namedtuple("User", "login, email, password")
-        User = user(login="login00003025", email="login00003025@mail.ru", password="login_00003025")
+        User = user(login=user_data.login, email=user_data.email, password=user_data.password)
         dm_db.delete_user_by_login(login=User.login)
         dataset = dm_db.get_user_by_login(login=User.login)
         assert len(dataset) == 0
