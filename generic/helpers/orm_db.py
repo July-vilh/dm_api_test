@@ -1,6 +1,6 @@
 from sqlalchemy import select
 
-from common_libs.orm_client.orm_client import OrmClient
+from orm_client import OrmClient
 from generic.helpers.orm_models import User
 
 
