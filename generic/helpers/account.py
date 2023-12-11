@@ -7,7 +7,7 @@ except ImportError:
 
 
 class Account:
-    def __init__(self, facade: Facade):
+    def __init__(self, facade):
         self.facade = facade
 
     def register_new_user(self, login: str, email: str, password: str):

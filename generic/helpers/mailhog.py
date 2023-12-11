@@ -3,7 +3,7 @@ import time
 
 from requests import Response
 # import pprint
-from common_libs.restclient1.restclient2 import restclient3
+from restclient.restclient import Restclient
 
 
 def decorator(fn):
@@ -24,7 +24,7 @@ def decorator(fn):
 class mailhog_api:
     def __init__(self, host='http://5.63.153.31:5025/'):
         self.host = host
-        self.client = restclient3(host=host)
+        self.client = Restclient(host=host)
 
     # @decorator
     def get_api_v2_messages(self, limit: int = 50) -> Response:
