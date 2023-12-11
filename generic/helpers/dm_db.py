@@ -1,5 +1,4 @@
-from common_libs.db_client.db_client import DBClient
-
+from db_client import DBClient
 
 class dmDB:
     def __init__(self, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB):
