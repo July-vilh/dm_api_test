@@ -74,12 +74,12 @@ class TestPostV1Account:
 
         assertions.check_users_was_created(login=login)
 
-        # # REGISTER ACTIVATE USER:
-        # dm_api_facade.account.activate_registered_user(login=login)
-        # # assertions.check_users_was_activated(login=login)
-        #
-        # # LOGIN USER:
-        # dm_api_facade.login.login_user(login=login, password=password)
+        # REGISTER ACTIVATE USER:
+        dm_api_facade.account.activate_registered_user(login=login)
+        # assertions.check_users_was_activated(login=login)
+
+        # LOGIN USER:
+        dm_api_facade.login.login_user(login=login, password=password)
 
     @pytest.mark.parametrize('login', [random_string() for _ in range(2)])
     @pytest.mark.parametrize('email', [random_string() + '@mail' + '.ru' for _ in range(2)])
