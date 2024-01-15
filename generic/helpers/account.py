@@ -1,5 +1,5 @@
 # from apis.dm_api_account import Registration
-from apis.dm_api_account.models import *
+from dm_api_account.models import *
 try:
     from Services.dm_api_account import Facade
 except ImportError:

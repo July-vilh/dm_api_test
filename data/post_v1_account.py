@@ -1,4 +1,4 @@
 class PostV1AccountData:
-    login = "login00003054"
-    password = "login_00003054"
-    email = "login00003054@mail.ru"
+    login = "login00003055"
+    password = "login_00003055"
+    email = "login00003055@mail.ru"
