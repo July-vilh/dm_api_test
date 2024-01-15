@@ -4,8 +4,9 @@ structlog
 curlify
 pydantic
 sqlalchemy
-https://github.com/July-vilh/db_client.git
-https://github.com/July-vilh/orm_client.git
-https://github.com/July-vilh/restclient.git
+git+https://github.com/July-vilh/db_client.git
+git+https://github.com/July-vilh/orm_client.git
+git+https://github.com/July-vilh/restclient.git
+git+https://github.com/July-vilh/apis.git
 
 
