@@ -7,6 +7,6 @@ sqlalchemy
 git+https://github.com/July-vilh/db_client.git
 git+https://github.com/July-vilh/orm_client.git
 git+https://github.com/July-vilh/restclient.git
-git+https://github.com/July-vilh/apis.git
+git+https://github.com/July-vilh/dm_api_account.git
 
 
