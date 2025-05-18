@@ -127,6 +127,3 @@ class TestPostV1Account:
 #             assert isinstance(value, str), f'Type at the {key} should be str, but now {type(value)}'
 #         elif key == "password":
 #             assert isinstance(value, str), f'Type at the {key} should be str, but now {type(value)}'
-
-
-# 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 мой токен шитхаба для пуша (надо настроить права походу)
